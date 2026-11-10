@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="sk"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Sukulenty a kaktusy</title>
+<title>Sukulenty a kaktusy</title><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#3f7d4e"><link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="icon-192.png">
 <style>
 :root{--bg:#f4f7f1;--card:#fff;--tx:#1f2a1f;--mut:#64735f;--ac:#3f7d4e;--ln:#dde5d8;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
 @media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#121a14;--card:#1b261e;--tx:#e8f0e6;--mut:#9bb09a;--ac:#7cc48c;--ln:#2b3a2f;color-scheme:dark}}
@@ -10,7 +10,7 @@
 body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.5 system-ui,-apple-system,Roboto,sans-serif}
 header{padding:16px 16px 8px}h1{margin:0 0 10px;font-size:22px}
 input{width:100%;padding:12px 14px;border-radius:12px;border:1px solid var(--ln);background:var(--card);color:var(--tx);font-size:16px}
-.chips{display:flex;gap:8px;margin-top:10px}.inst{margin:0 0 10px;padding:8px 14px;border-radius:20px;border:1px solid var(--ac);background:transparent;color:var(--ac);font-size:14px}.ov{position:fixed;inset:0;background:rgba(0,0,0,.5);display:flex;align-items:flex-end;justify-content:center;z-index:9}.sh{background:var(--card);color:var(--tx);border-radius:20px 20px 0 0;padding:20px 20px calc(20px + env(safe-area-inset-bottom,0px));width:100%;max-width:700px}.sh h3{margin:0 0 8px}.sh ol{padding-left:20px;margin:0 0 12px}.sh code{display:block;word-break:break-all;font-size:12px;color:var(--mut);margin-bottom:12px}.sh button{margin-right:8px}
+.chips{display:flex;gap:8px;margin-top:10px}@media(display-mode:standalone){.inst{display:none}}.inst{margin:0 0 10px;padding:8px 14px;border-radius:20px;border:1px solid var(--ac);background:transparent;color:var(--ac);font-size:14px}.ov{position:fixed;inset:0;background:rgba(0,0,0,.5);display:flex;align-items:flex-end;justify-content:center;z-index:9}.sh{background:var(--card);color:var(--tx);border-radius:20px 20px 0 0;padding:20px 20px calc(20px + env(safe-area-inset-bottom,0px));width:100%;max-width:700px}.sh h3{margin:0 0 8px}.sh ol{padding-left:20px;margin:0 0 12px}.sh code{display:block;word-break:break-all;font-size:12px;color:var(--mut);margin-bottom:12px}.sh button{margin-right:8px}
 .chip{padding:8px 14px;border-radius:20px;border:1px solid var(--ln);background:var(--card);color:var(--tx);font-size:14px}
 .chip.on{background:var(--ac);color:#fff;border-color:var(--ac)}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:8px 16px 24px;max-width:700px;margin:auto}
@@ -190,13 +190,13 @@ function art(p){const g=D[p[3]](p[4],p[5])+pot;return `<svg viewBox="0 0 200 200
 const T=(p)=>p[2];let q="",f="Všetky",sel=null;
 function esc(s){return s}
 function render(){const a=document.getElementById("app");
-if(sel!==null){const p=P[sel];const rows=[["☀️","Svetlo",p[6]],["💧","Zalievanie",p[7]],["🪴","Substrát",p[8]],["🌡️","Teplota",p[9]],["🌱","Množenie",p[10]],["💡","Zaujímavosť",p[11]]];
-a.innerHTML=`<div class="det"><button class="back" onclick="go(null)">← Späť</button><div class="ph" data-i="${sel}" data-big="1">${art(p)}</div><div class="in"><h2>${p[0]}</h2><div class="lat">${p[1]}</div><span class="tag">${p[2]}</span>${rows.map(r=>`<div class="row"><span>${r[0]}</span><div><b>${r[1]}</b>${r[2]}</div></div>`).join("")}</div></div>`;window.scrollTo(0,0);return}
+if(sel!==null){const p=P[sel];const rows=[...(ORI[p[1]]?[["🌍","Pôvod",ORI[p[1]]]]:[]),["☀️","Svetlo",p[6]],["💧","Zalievanie",p[7]],["🪴","Substrát",p[8]],["🌡️","Teplota",p[9]],["🌱","Množenie",p[10]],["💡","Zaujímavosť",p[11]]];
+a.innerHTML=`<div class="det"><button class="back" onclick="go(null)">← Späť</button><div class="ph" data-i="${sel}" data-big="1">${art(p)}</div><div class="in"><h2>${p[0]}</h2><div class="lat">${p[1]}</div><span class="tag">${p[2]}</span>${rows.map(r=>`<div class="row"><span>${r[0]}</span><div><b>${r[1]}</b>${r[2]}</div></div>`).join("")}<div class="row" id="wk" style="display:none"><span>📖</span><div><b id="wh">Z Wikipédie</b><i id="wt" style="font-style:normal"></i><br><a id="wl" target="_blank" rel="noopener" style="color:var(--ac)">Celý článok</a></div></div></div></div>`;window.scrollTo(0,0);return}
 const l=P.map((p,i)=>[p,i]).filter(([p])=>(f==="Všetky"||p[2]===f)&&(p[0]+p[1]).toLowerCase().includes(q.toLowerCase()));
 a.innerHTML=`<header><h1>🌵 Sukulenty a kaktusy</h1><button class="inst" onclick="inst()">📲 Pridať na plochu</button><input id="s" type="search" placeholder="Hľadať rastlinu…" value="${q}"><div class="chips">${["Všetky","Sukulent","Kaktus"].map(c=>`<button class="chip ${c===f?"on":""}" onclick="flt('${c}')">${c==="Sukulent"?"Sukulenty":c==="Kaktus"?"Kaktusy":c}</button>`).join("")}</div></header><div class="grid">${l.map(([p,i])=>`<button class="card" onclick="go(${i})"><div class="ph" data-i="${i}" style="padding:0">${art(p)}</div><div><b>${p[0]}</b><i>${p[1]}</i></div></button>`).join("")}</div>${l.length?"":'<div class="empty">Nič sa nenašlo.</div>'}`;
 const s=document.getElementById("s");s.oninput=e=>{q=e.target.value;const pos=e.target.selectionStart;render();const n=document.getElementById("s");n.focus();n.setSelectionRange(pos,pos)}}
-const LINK="https://claude.ai/artifact/ML4TJMJy7Ejyam6aVyAtc7";let dp=null;addEventListener("beforeinstallprompt",e=>{e.preventDefault();dp=e});
-function inst(){if(dp){dp.prompt();dp=null;return}const o=document.createElement("div");o.className="ov";o.onclick=e=>{if(e.target===o)o.remove()};o.innerHTML=`<div class="sh"><h3>Pridanie na plochu</h3><ol><li>Otvor tento odkaz v <b>Chrome</b> (nie vo vnútri appky Claude).</li><li>Ťukni na <b>⋮</b> vpravo hore.</li><li>Vyber <b>Pridať na plochu</b> alebo <b>Nainštalovať aplikáciu</b>.</li></ol><code>${LINK}</code><button class="chip on" id="cp">Kopírovať odkaz</button><button class="chip" id="cl">Zavrieť</button></div>`;document.body.appendChild(o);document.getElementById("cl").onclick=()=>o.remove();document.getElementById("cp").onclick=e=>{try{navigator.clipboard.writeText(LINK).then(()=>e.target.textContent="Skopírované ✓",()=>e.target.textContent="Skopíruj odkaz ručne")}catch(x){e.target.textContent="Skopíruj odkaz ručne"}}}
+const LINK="https://studyworkdie.github.io/Cactuspedia/";let dp=null;addEventListener("beforeinstallprompt",e=>{e.preventDefault();dp=e});
+function inst(){if(dp){dp.prompt();dp=null;return}const o=document.createElement("div");o.className="ov";o.onclick=e=>{if(e.target===o)o.remove()};o.innerHTML=`<div class="sh"><h3>Pridanie na plochu</h3><ol><li>Otvor stránku v <b>Chrome</b>.</li><li>Ťukni na <b>⋮</b> vpravo hore.</li><li>Vyber <b>Nainštalovať aplikáciu</b> alebo <b>Pridať na plochu</b>.</li></ol><p>iPhone: v Safari ťukni na <b>Zdieľať</b> a potom <b>Na plochu</b>.</p><code>${LINK}</code><button class="chip on" id="cp">Kopírovať odkaz</button><button class="chip" id="cl">Zavrieť</button></div>`;document.body.appendChild(o);document.getElementById("cl").onclick=()=>o.remove();document.getElementById("cp").onclick=e=>{try{navigator.clipboard.writeText(LINK).then(()=>e.target.textContent="Skopírované ✓",()=>e.target.textContent="Skopíruj odkaz ručne")}catch(x){e.target.textContent="Skopíruj odkaz ručne"}}}
 function go(i){sel=i;render()}function flt(c){f=c;render()}
 const WC={};
 async function wj(u){const r=await fetch(u);if(!r.ok)throw 0;return r.json()}
@@ -205,6 +205,13 @@ try{const j=await wj("https://en.wikipedia.org/api/rest_v1/page/summary/"+encode
 if(!o)try{const j=await wj("https://en.wikipedia.org/w/api.php?action=query&generator=search&gsrsearch="+encodeURIComponent(l)+"&gsrlimit=1&prop=pageimages&piprop=thumbnail&pithumbsize=500&format=json&origin=*");const pg=Object.values(j.query.pages)[0];if(pg.thumbnail)o={thumb:pg.thumbnail.source}}catch(e){}
 return WC[l]=o}
 function enh(){document.querySelectorAll(".ph").forEach(async d=>{const p=P[d.dataset.i],w=await wiki(p[1]);if(!w||!d.isConnected)return;const im=new Image();im.alt=p[0];im.onload=()=>{if(d.isConnected){d.innerHTML="";d.appendChild(im)}};im.src=d.dataset.big?(w.full||w.thumb):w.thumb})}
-const _r=render;render=function(){_r();enh()};
+const ORI={"Echeveria elegans":"Mexiko","Aloe vera":"Arabský polostrov (dnes pestovaná po celom svete)","Crassula ovata":"Južná Afrika (Východné Kapsko a KwaZulu-Natal)","Haworthiopsis fasciata":"Južná Afrika (Východné Kapsko)","Lithops":"Namíbia a Južná Afrika","Senecio rowleyanus":"Juhozápadná Afrika (Namíbia a Južná Afrika)","Echinocactus grusonii":"Stredné Mexiko","Opuntia ficus-indica":"Mexiko (dnes rozšírená aj v Stredomorí)","Mammillaria":"Mexiko a juhozápad USA","Cereus peruvianus":"Južná Amerika","Schlumbergera truncata":"Brazília (horské lesy)"};
+if("serviceWorker" in navigator)addEventListener("load",()=>navigator.serviceWorker.register("sw.js").catch(()=>{}));
+const WT={};
+async function wtx(l){if(l in WT)return WT[l];let o=null;
+for(const lg of["sk","en"]){try{const j=await wj("https://"+lg+".wikipedia.org/api/rest_v1/page/summary/"+encodeURIComponent(l.replace(/ /g,"_")));if(j.extract&&j.type!=="disambiguation"){o={t:j.extract,u:(j.content_urls&&j.content_urls.desktop)?j.content_urls.desktop.page:"",l:lg.toUpperCase()};break}}catch(e){}}
+return WT[l]=o}
+async function wk(i){const o=await wtx(P[i][1]);if(!o||sel!==i)return;const b=document.getElementById("wk");if(!b)return;document.getElementById("wt").textContent=o.t;document.getElementById("wl").href=o.u;document.getElementById("wh").textContent="Z Wikipédie ("+o.l+")";b.style.display="flex"}
+const _r=render;render=function(){_r();enh();if(sel!==null)wk(sel)};
 render();
 </script></body></html>
